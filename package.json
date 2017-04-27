@@ -1,0 +1,16 @@
+{
+  "name": "owapi",
+  "version": "1.0.0",
+  "description": "RESTful API for Overwatch player data",
+  "main": "scrape.js",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "index"
+  },
+  "author": "Brendan Voelz",
+  "license": "ISC"
+}
