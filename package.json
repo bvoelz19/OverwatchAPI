@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "index"
+    "start": "node scrape.js"
   },
   "author": "Brendan Voelz",
   "license": "ISC"
