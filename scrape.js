@@ -27,6 +27,10 @@ var collection_name = "player_data";
 var ft_stats = [];
 var featured_stats = {};
 
+app.get('/', function(req, res) {
+        res.send("Hello");
+});
+
 app.post('/submit', function(req, res) {
         var username = req.body.username.replace(/[^\w\s]/gi, '');
         var platform = req.body.platform.replace(/[^\w\s]/gi, '');
