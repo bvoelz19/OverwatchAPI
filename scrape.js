@@ -27,13 +27,9 @@ var collection_name = "player_data";
 var ft_stats = [];
 var featured_stats = {};
 
-app.get('/', function(req, res) {
-        res.send("Hello");
-});
-
-app.post('/submit', function(req, res) {
-        var username = req.body.username.replace(/[^\w\s]/gi, '');
-        var platform = req.body.platform.replace(/[^\w\s]/gi, '');
+app.get('/query', function(req, res) {
+        var username = req.query.username.replace(/[^\w\s]/gi, '');
+        var platform = req.query.platform.replace(/[^\w\s]/gi, '');
         var url      = 'https://playoverwatch.com/en-us/career/' + platform + '/' + username;
 
         request(url, function(error, response, html) {
@@ -42,11 +38,11 @@ app.post('/submit', function(req, res) {
                         $('h3.card-heading').each(function(i, element) {
                                 ft_stats[i] = (element.children[0].data);
                         });
+                        featured_stats = {};
                         get_ft_stats();
                         res.send(featured_stats);
-                        console.log("Hi there");
                 } else {
-                        // TODO: Send error response
+                        res.send("Error");
                 }
         });
 });
