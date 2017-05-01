@@ -40,7 +40,7 @@ app.post('/submit', function(req, res) {
                         });
                         get_ft_stats();
                         res.send(featured_stats);
-                        console.log("hey");
+                        console.log("Hi there");
                 } else {
                         // TODO: Send error response
                 }
