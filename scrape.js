@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('express').static(__dirname+'/public'));
 app.get('/', function (req, res) {
-    res.sendFile('index.html', { root: path.join(__dirname, 'public') });
+    res.sendFile('index.html');
 });
 
 /* Setting up database configuration */
