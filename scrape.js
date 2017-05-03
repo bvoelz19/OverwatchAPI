@@ -24,24 +24,33 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 });
 var collection_name = "player_data";
 
-var ft_stats = [];
-var featured_stats = {};
+var player_stats = {
+        top_heroes     : {
+                names : [],
+                times : []
+        },
+        featured_stats : {}
+};
 
+/* Main GET route for the RESTful API */
 app.get('/query', function(req, res) {
-        featured_stats = {};
         var username = req.query.username.replace(/[^\w\s]/gi, '');
         var platform = req.query.platform.replace(/[^\w\s]/gi, '');
         var url      = 'https://playoverwatch.com/en-us/career/' + platform + '/' + username;
 
         request(url, function(error, response, html) {
                 if (!error) {
+                        // Cheerio.js module, loads HTML
                         var $ = cheerio.load(html);
-                        $('h3.card-heading').each(function(i, element) {
-                                ft_stats[i] = (element.children[0].data);
-                        });
-                        featured_stats = {};
-                        get_ft_stats();
-                        res.send(featured_stats);
+
+                        // Load in 'Featured Stats'
+                        get_ft_stats($);
+
+                        // Load in 'Top Heroes'
+                        get_top_heroes($);
+
+                        // Send player_stats as response
+                        res.send(player_stats);
                 } else {
                         res.send("Error");
                 }
@@ -49,19 +58,59 @@ app.get('/query', function(req, res) {
 });
 
 /*
- * get_ft_stats
- * Populates featured_stats object with scraped data
+ * get_top_heroes
+ * Loads top_heroes member of player_stats
  */
-function get_ft_stats() {
-        featured_stats.eliminations = ft_stats[0];
-        featured_stats.damage_done  = ft_stats[1];
-        featured_stats.deaths       = ft_stats[2];
-        featured_stats.final_blows  = ft_stats[3];
-        featured_stats.healing      = ft_stats[4];
-        featured_stats.obj_kills    = ft_stats[5];
-        featured_stats.obj_time     = ft_stats[6];
-        featured_stats.solo_kills   = ft_stats[7];
+function get_top_heroes($)
+{
+        $('div.bar-text div.title').each(function(i, element) {
+                if (i < 5) {
+                        player_stats.top_heroes.names.push(element.children[0].data);
+                }
+        });
+        $('div.bar-text div.description').each(function(i, element) {
+                if (i < 5) {
+                        player_stats.top_heroes.times.push(element.children[0].data);
+                }
+        });
 }
+
+/*
+ * get_ft_stats
+ * Loads featured_stats member of player_stats; wrapper function
+ */
+function get_ft_stats($)
+{
+        $('h3.card-heading').each(function(i, element) {
+                load_ft_stats(i, element);
+        });
+}
+
+/*
+ * load_ft_stats
+ * Loads appropriate values into featured_stats member of player_stats
+ */
+function load_ft_stats(i, element)
+{
+        if (i == 0) {
+                player_stats.featured_stats.eliminations = element.children[0].data;
+        } else if (i == 1) {
+                player_stats.featured_stats.damage_done = element.children[0].data;
+        } else if (i == 2) {
+                player_stats.featured_stats.deaths = element.children[0].data;
+        } else if (i == 3) {
+                player_stats.featured_stats.final_blows = element.children[0].data;
+        } else if (i == 4) {
+                player_stats.featured_stats.healing = element.children[0].data;
+        } else if (i == 5) {
+                player_stats.featured_stats.obj_kills = element.children[0].data;
+        } else if (i == 6) {
+                player_stats.featured_stats.obj_time = element.children[0].data;
+        } else if (i == 7) {
+                player_stats.featured_stats.solo_kills = element.children[0].data;
+        }
+}
+
 
 http.listen(process.env.PORT || 3000, function() {
     console.log('listening on port:3000');
