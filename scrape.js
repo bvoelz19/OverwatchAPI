@@ -28,6 +28,7 @@ var ft_stats = [];
 var featured_stats = {};
 
 app.get('/query', function(req, res) {
+        featured_stats = {};
         var username = req.query.username.replace(/[^\w\s]/gi, '');
         var platform = req.query.platform.replace(/[^\w\s]/gi, '');
         var url      = 'https://playoverwatch.com/en-us/career/' + platform + '/' + username;
