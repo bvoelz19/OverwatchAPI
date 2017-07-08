@@ -14,9 +14,6 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "start": "node scrape.js"
-  },
   "author": "Brendan Voelz",
   "license": "ISC"
 }

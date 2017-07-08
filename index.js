@@ -126,6 +126,6 @@ function load_ft_stats(i, element)
         }
 }
 
-app.listen(process.env.PORT || 3000, function() {
+http.listen(process.env.PORT || 3000, function() {
     console.log('listening on port:3000');
 });
