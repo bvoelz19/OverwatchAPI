@@ -34,14 +34,16 @@ var player_stats = {
 
 /* Main GET route for the RESTful API */
 app.get('/query', function(req, res) {
-        var username = req.query.username.replace(/[^\w\s]/gi, '');
-        var platform = req.query.platform.replace(/[^\w\s]/gi, '');
+        var username = req.query.username; //.replace(/[^\w\s]/gi, '');
+        var platform = req.query.platform; //.replace(/[^\w\s]/gi, '');
         var url      = 'https://playoverwatch.com/en-us/career/' + platform + '/' + username;
 
         request(url, function(error, response, html) {
                 if (!error) {
                         // Cheerio.js module, loads HTML
                         var $ = cheerio.load(html);
+
+                        initialize();
 
                         // Load in 'Featured Stats'
                         get_ft_stats($);
@@ -58,6 +60,18 @@ app.get('/query', function(req, res) {
 });
 
 /*
+ * initialize
+ * Zeroes out members of player_stats data module
+ */
+ function initialize()
+ {
+        console.log("Initialize");
+        player_stats.top_heroes.names = [];
+        player_stats.top_heroes.times = [];
+        player_stats.featured_stats   = {};
+ }
+
+/*
  * get_top_heroes
  * Loads top_heroes member of player_stats
  */
@@ -65,6 +79,7 @@ function get_top_heroes($)
 {
         $('div.bar-text div.title').each(function(i, element) {
                 if (i < 5) {
+                        console.log(element);
                         player_stats.top_heroes.names.push(element.children[0].data);
                 }
         });

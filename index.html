@@ -6,12 +6,38 @@
                 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
                 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
                 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-                <link rel="stylesheet" href="style.css"/>
 
-                <!-- Latest compiled and minified JavaScript -->
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                <!-- Latest compiled and minified CSS -->
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+                <!-- jQuery library -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+                <!-- Latest compiled JavaScript -->
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+                <link rel="stylesheet" href="style.css"/>
         </head>
         <body>
-                <h1>OverwatchAPI</h1>
+                <div class="page-header">OverwatchAPI<br><h4><em>A RESTful API that serves Overwatch player data as JSON on request</em></h4></div>
+                <br>
+                <h3>Usage details</h3>
+                <p>HTTP GET</p>
+                <code>https://overwatchapi.herokuapp.com/query?platform=YOUR_PLATFORM&amp;username=YOUR_USERNAME</code>
+                <ul>
+                        <li>Supported platforms: "PSN", "PC", "XBOX"</li>
+                        <li>Username <strong>is case-sensitive</strong></li>
+                </ul>
+                <br>
+                <h3>Example</h3>
+                <p>Command: <code>curl https://overwatchapi.herokuapp.com/query?platform=PSN&amp;username=bvoelz19</code></p>
+                <p>Response:</p>
+                <code>{&nbsp;"top_heroes" : {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        "names" : ["Roadhog","Hanzo","Pharah","Orisa","Reaper"],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        "times" : ["7 hours","3 hours","3 hours","2 hours","1 hour"]<br>&nbsp;&nbsp;&nbsp;},<br>
+                        &nbsp;&nbsp;&nbsp;"featured_stats" : {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"eliminations" : "12.14",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"damage_done" : "4,518",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"deaths" : "6.3",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"final_blows" : "7.1",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"healing":"1,057",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"obj_kills":"4.17",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"obj_time":"00:27",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"solo_kills":"2.93"<br>&nbsp;&nbsp;&nbsp;}<br>}</code>
+                
+
         </body>
 </html>
